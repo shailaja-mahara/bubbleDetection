@@ -1,59 +1,55 @@
 # bubble_rcnn
 
-
-masters-thesis/
-│
-├── data/
-│   ├── raw/
-│   │   ├── fits/
-│   │   │   └── ngc628_f770w.fits
-│   │   ├── catalog/
-│   │   │   └── jwst_bubble_properties.txt
-│   │
-│   ├── processed/
-│   │   ├── images/
-│   │   │   └── ngc628_f770w_norm.npy
-│   │   ├── masks/
-│   │   │   └── ngc628_mask.npy
-│   │   ├── metadata/
-│   │   │   └── pixel_scale.json
-│   │
-│   ├── patches/
-│   │   ├── train/
-│   │   │   ├── images/
-│   │   │   └── masks/
-│   │   ├── val/
-│   │   │   ├── images/
-│   │   │   └── masks/
-│   │   └── test/
-│   │       ├── images/
-│   │       └── masks/
-│
-├── notebooks/
-│   └── data_processing.ipynb
-│
-├── src/
-│   ├── data/
-│   │   ├── fits_loader.py
-│   │   ├── wcs_utils.py
-│   │   ├── mask_generator.py
-│   │   └── patch_extractor.py
-│   │
-│   ├── models/
-│   │   └── unet.py
-│   │
-│   ├── training/
-│   │   └── train.py
-│   │
-│   └── utils/
-│       └── visualization.py
-│
-├── outputs/
-│   ├── figures/
-│   ├── predictions/
-│   └── logs/
-│
-├── thesis/
-│   └── latex/
-│
+```bash
+├── data
+│   ├── patches
+│   │   ├── test
+│   │   │   ├── images
+│   │   │   ├── masks
+│   │   ├── train
+│   │   │   ├── images
+│   │   │   ├── masks
+│   │   ├── val
+│   │   │   ├── images
+│   │   │   ├── masks
+│   ├── processed
+│   │   ├── images
+│   │   │   ├── imngc628_f770w_norm.npy
+│   │   ├── masks
+│   │   │   ├── ngc628_f770w_norm.npy
+│   │   │   ├── ngc628_superbubble_mask.npy
+│   │   ├── metadata
+│   │   ├── patches
+│   │   │   ├── X.npy
+│   │   │   ├── Y.npy
+│   ├── raw
+│   │   ├── catalogue
+│   │   │   ├── jwst_bubble_properties_A.txt
+│   │   ├── fits
+│   │   │   ├── jw02107-o039_t018_miri_f770w_i2d.fits
+├── notebooks
+│   ├── data
+│   │   ├── processed
+│   │   │   ├── patches
+│   ├── catalogueadjuctment_alternate.ipynb
+│   ├── data_processing_v0.ipynb
+│   ├── data_processing.ipynb
+│   ├── patch_maker.ipynb
+│   ├── predictions.ipynb
+├── outputs
+│   ├── figures
+│   │   │   ├── **/*.png
+│   ├── logs
+│   ├── predictions
+│   │   │   ├── all_bubbles_overlay.png
+├── src
+│   ├── data
+│   ├── models
+│   ├── training
+│   ├── utils
+├── verify
+│   ├── bubbles
+│   ├── random
+└── .gitignore
 └── README.md
+```
