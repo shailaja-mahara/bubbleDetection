@@ -38,8 +38,44 @@
 │   ├── predictions.ipynb
 ├── outputs
 │   ├── figures
+│   │   │   ├── catalogueA
+│   │   │   │   ├── overlay_tiny.png
+│   │   │   │   ├── overlay_small.png
+│   │   │   │   ├── overlay_medium.png
+│   │   │   │   ├── overlay_large.png
+│   │   │   │   ├── overlay_giants.png
+│   │   │   │   ├── overlay_edgeLarge.png
+│   │   │   │   ├── distributions
+│   │   │   │   │   ├── avg_radius_distribution_categories_A.png
+│   │   │   │   │   ├── avg_radius_distribution_linear_A.png
+│   │   │   │   │   ├── avg_radius_distribution_log_A.png
+│   │   │   ├── catalogueB
+│   │   │   │   ├── overlay_tiny.png
+│   │   │   │   ├── overlay_small.png
+│   │   │   │   ├── overlay_medium.png
+│   │   │   │   ├── overlay_large.png
+│   │   │   │   ├── overlay_giants.png
+│   │   │   │   ├── overlay_edgeLarge.png
+│   │   │   │   ├── distributions
+│   │   │   │   │   ├── avg_radius_distribution_categories_A.png
+│   │   │   │   │   ├── avg_radius_distribution_linear_A.png
+│   │   │   │   │   ├── avg_radius_distribution_log_A.png
+│   │   │   ├── catalogueC
+│   │   │   │   ├── overlay_tiny.png
+│   │   │   │   ├── overlay_small.png
+│   │   │   │   ├── overlay_medium.png
+│   │   │   │   ├── overlay_large.png
+│   │   │   │   ├── overlay_giants.png
+│   │   │   │   ├── overlay_edgeLarge.png
+│   │   │   │   ├── distributions
+│   │   │   │   │   ├── avg_radius_distribution_categories_A.png
+│   │   │   │   │   ├── avg_radius_distribution_linear_A.png
+│   │   │   │   │   ├── avg_radius_distribution_log_A.png
 │   │   │   ├── **/*.png
 │   ├── logs
+│   │   ├── catalogueA_stratification.txt
+│   │   ├── catalogueB_stratification.txt
+│   │   ├── catalogueC_stratification.txt
 │   ├── predictions
 │   │   │   ├── all_bubbles_overlay.png
 ├── src
