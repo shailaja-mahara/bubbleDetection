@@ -25,7 +25,9 @@
 │   ├── raw
 │   │   ├── catalogue
 │   │   │   ├── jwst_bubble_properties_A.txt
+│   │   │   ├── ngc1566pixel.txt
 │   │   ├── fits
+│   │   │   ├── jw02107-c1007_t007_miri_f1130w_i2d_NGC1566_cropped.fits.fits
 │   │   │   ├── jw02107-o039_t018_miri_f770w_i2d.fits
 ├── notebooks
 │   ├── data
@@ -33,10 +35,12 @@
 │   │   │   ├── patches
 │   ├── catalogueABC-verification.ipynb
 │   ├── catalogueadjuctment_alternate.ipynb
+│   ├── crop_ngc1566.ipynb
 │   ├── data_cleaningABC.ipynb
 │   ├── data_cleaning.ipynb
 │   ├── data_processing_v0.ipynb
 │   ├── data_processing.ipynb
+│   ├── ngc1566on-training2.ipynb
 │   ├── patch_maker.ipynb
 │   ├── predictions.ipynb
 ├── outputs
