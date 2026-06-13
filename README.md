@@ -19,6 +19,8 @@
 │   │   │   ├── ngc628_f770w_norm.npy
 │   │   │   ├── ngc628_superbubble_mask.npy
 │   │   ├── metadata
+│   │   │   ├── bad_bubble_id.txt
+│   │   │   ├── catalogue_collective.txt
 │   │   ├── patches
 │   │   │   ├── X.npy
 │   │   │   ├── Y.npy
@@ -31,14 +33,18 @@
 │   ├── data
 │   │   ├── processed
 │   │   │   ├── patches
+│   ├── catalogue_collective.ipynb
 │   ├── catalogueABC-verification.ipynb
 │   ├── catalogueadjuctment_alternate.ipynb
+│   ├── data_augumentation.ipynb
 │   ├── data_cleaningABC.ipynb
 │   ├── data_cleaning.ipynb
 │   ├── data_processing_v0.ipynb
+│   ├── data_processing_v1.ipynb
 │   ├── data_processing.ipynb
 │   ├── patch_maker.ipynb
 │   ├── predictions.ipynb
+│   ├── verify-badbubbles.ipynb
 ├── outputs
 │   ├── figures
 │   │   │   ├── catalogueA
@@ -92,3 +98,25 @@
 └── .gitignore
 └── README.md
 ```
+
+
+
+
+image preprocessing:
+│   ├── data_processing_v0.ipynb
+│   ├── data_processing_v1.ipynb
+│   ├── data_processing.ipynb
+
+data processing (cleaning refining verifying prep)
+│   ├── verify-badbubbles.ipynb
+│   ├── catalogue_collective.ipynb
+│   ├── catalogueABC-verification.ipynb
+│   ├── catalogueadjuctment_alternate.ipynb
+│   ├── data_augumentation.ipynb
+│   ├── data_cleaningABC.ipynb
+│   ├── data_cleaning.ipynb
+│   ├── patch_maker.ipynb
+
+training
+│   ├── patch_maker.ipynb
+│   ├── predictions.ipynb
