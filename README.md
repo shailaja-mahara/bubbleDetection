@@ -1,4 +1,4 @@
-# bubble_rcnn
+# bubbleDetection
 
 ```bash
 ├── data
