@@ -1,0 +1,7 @@
+SIZE_CLASS,lower_bound_pc,upper_bound_pc
+tiny,-inf,18.0
+small,18.0,24.0
+medium,24.0,30.0
+large,30.0,41.0
+giants,41.0,228.07000000000016
+edgeLarge,228.07000000000016,inf
