@@ -1,7 +1,0 @@
-SIZE_CLASS,lower_bound_pc,upper_bound_pc,catalogue_a_count,catalogue_a_min_radius_pc,catalogue_a_max_radius_pc
-tiny,-inf,18.0,315,6,17
-small,18.0,24.0,348,18,23
-medium,24.0,30.0,331,24,29
-large,30.0,41.0,351,30,40
-giants,41.0,228.07000000000016,340,41,227
-edgeLarge,228.07000000000016,inf,9,229,552
