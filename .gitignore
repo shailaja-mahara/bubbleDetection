@@ -1,3 +1,7 @@
 *.DS_Store
 *NGC1566.fits
 *.numbers
+*experiments*
+*catalogueA*
+*catalogueB*
+*catalogueC*
