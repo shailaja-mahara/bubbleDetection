@@ -1,0 +1,6 @@
+{
+  "best_threshold": 0.40000000000000013,
+  "validation_dice": 0.46567270159721375,
+  "predicted_foreground_ratio": 0.32441784086681547,
+  "ground_truth_foreground_ratio": 0.1796017587184906
+}
