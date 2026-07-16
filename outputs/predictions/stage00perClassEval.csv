@@ -1,0 +1,2 @@
+size_class,n_bubbles,n_detected,object_recall,pixel_recall,mean_coverage
+edgeLarge,69.0,53.0,0.7681159420289855,0.8166002330287606,0.6994288996863536
