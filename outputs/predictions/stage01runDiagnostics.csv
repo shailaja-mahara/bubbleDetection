@@ -1,0 +1,18 @@
+metric,value,note
+val_true_foreground_pct,0.1796,fraction of bubble pixels in the 21 val patches
+train_true_foreground_pct,0.1667,fraction of bubble pixels in YtrainAug
+foreground_ratio_train_over_val,0.928,split is balance-matched
+dice_all_ones_baseline,0.3045,predict every pixel as bubble
+dice_random_at_p_baseline,0.1802,random mask at true foreground rate
+params,1962337,4-level U-Net (same architecture as stage00)
+best_val_threshold,0.39,threshold sweep 0.01-0.95 on val
+best_val_dice_thresholded,0.4657,hard dice at threshold 0.39
+val_dice_at_0.5,0.4629,hard dice at the default eval threshold
+pred_foreground_at_best_t,0.3278,fraction of pixels predicted positive at t=0.39
+pred_foreground_at_0.5,0.2912,fraction predicted positive at t=0.5
+pred_max,0.9974,network saturates on confident detections
+soft_val_dice_checkpoint_keras,0.3883,val_dice_coef at best epoch 39 (batch-mean)
+soft_val_dice_global_recomputed,0.4121,global soft dice of saved model on val
+train_dice_at_checkpoint,0.4606,epoch 39
+train_val_dice_gap_at_checkpoint,0.0723,0.4606 - 0.3883
+margin_above_floor,0.1612,best thresholded dice minus all-ones floor
