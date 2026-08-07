@@ -6,3 +6,11 @@
 *catalogueB*
 *catalogueC*
 *.pdf
+*chapter*
+*ngc1566*
+od_*
+*diagnostics*
+scripts/*
+chapters/*
+docs/*
+latex/*
