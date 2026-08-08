@@ -1,0 +1,19 @@
+{
+  "active_stage": "stage02",
+  "fold": 1,
+  "use_batchnorm": true,
+  "tversky_alpha": 0.5,
+  "tversky_beta": 0.5,
+  "bce_weight": 2.0,
+  "ignore_labels": true,
+  "augment_factor": 3,
+  "epochs": 100,
+  "batch_size": 4,
+  "seed": 42,
+  "params": 1968225,
+  "n_train_patches": 91,
+  "n_val_patches": 21,
+  "n_excluded_patches": 24,
+  "train_supervised_ratio": 0.9863106608390808,
+  "val_supervised_ratio": 0.9871135950088501
+}
