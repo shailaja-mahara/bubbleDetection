@@ -1,0 +1,8 @@
+{
+  "run_name": "stage05baseline",
+  "fold": 0,
+  "best_threshold": 0.4500000000000001,
+  "validation_dice": 0.3577413260936737,
+  "predicted_foreground_ratio": 0.5827553868293762,
+  "ground_truth_foreground_ratio": 0.14661788940429688
+}
