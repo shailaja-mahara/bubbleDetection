@@ -1,166 +1,134 @@
-# Introduction
-- Master Thesis
-<!-- 
-## :ledger: Index
+# bubble_rcnn
 
-- [About](#beginner-about)
-- [Usage](#zap-usage)
-  - [Installation](#electric_plug-installation)
-  - [Commands](#package-commands)
-- [Development](#wrench-development)
-  - [Pre-Requisites](#notebook-pre-requisites)
-  - [Developmen Environment](#nut_and_bolt-development-environment)
-  - [File Structure](#file_folder-file-structure)
-  - [Build](#hammer-build)  
-  - [Deployment](#rocket-deployment)  
-- [Community](#cherry_blossom-community)
-  - [Contribution](#fire-contribution)
-  - [Branches](#cactus-branches)
-  - [Guideline](#exclamation-guideline)  
-- [FAQ](#question-faq)
-- [Resources](#page_facing_up-resources)
-- [Gallery](#camera-gallery)
-- [Credit/Acknowledgment](#star2-creditacknowledgment)
-- [License](#lock-license) -->
+A pipeline that turns published superbubble catalogues and a JWST/MIRI mosaic
+into a trained segmentation model and a per-size-class detection report.
 
-##  :beginner: About
-This project is about using an automating the approach to superbubble detection using Convolutional Neural Networks (CNN) deep learning to efficiently detect, superbubbles in astronomical images from the PHANGS-JWST survey.
+Given a FITS mosaic and one or more catalogues of elliptical annotations, the
+code merges and cleans the catalogues, rasterises them into a three-valued
+segmentation target, extracts training patches under a leakage-safe spatial
+split, trains a U-Net per fold, and grades the result against a spatial null
+model. A command-line tool applies a trained model to an unseen mosaic and
+emits a candidate catalogue in sky coordinates.
 
-<!-- ## :zap: Usage
-Write about how to use this project.
-create a entry script for base execution -->
+> **Name.** `bubble_rcnn` is left over from an early design that used a
+> region-based detector. The pipeline trains a U-Net for binary semantic
+> segmentation; there is no R-CNN in it.
 
-###  :electric_plug: Installation
-- Add Setup and Installations
+## Requirements
+
+Python 3.10 or newer. No environment file is committed; install directly:
 
 ```
-$ add installations steps if you have to.
+pip install tensorflow numpy pandas scipy scikit-image astropy reproject \
+            matplotlib jupyter nbformat nbclient
 ```
 
-###  :package: Commands
-- Add terminal command and entry script command
+`tensorflow` is the only heavy dependency and the only one that benefits from
+a GPU. `nbformat` and `nbclient` are needed only if you drive the notebooks
+programmatically through `scripts/experiments/runPipeline.py`.
 
-##  :wrench: Development
-Add list of supervisors email/github
+## Inputs
 
-### :notebook: Pre-Requisites
-List all the pre-requisites the system needs to develop this project.
-- A tool
+Two things must be present before anything runs:
 
-###  :nut_and_bolt: Development Environment
-Write about setting up the working environment for your project.
-- How to download the project...
-- How to install dependencies...
+- `data/raw/fits/` — a Level-3 calibrated (i2d) FITS mosaic
+- `data/raw/catalogue/` — one or more catalogues of elliptical annotations, as
+  whitespace-delimited text with sky coordinates, semi-major and semi-minor
+  axes in parsecs, average radius and position angle
 
+Neither is redistributed in this repository. The pipeline as configured expects
+the F770W mosaic of NGC 628 and the three annotator catalogues associated with
+it.
 
-###  :file_folder: File Structure
-Add a file structure here with the basic details about files, below is an example.
+## Running the pipeline
 
-```bash
-├── data
-│   ├── patches
-│   │   ├── test
-│   │   │   ├── images
-│   │   │   ├── masks
-│   │   ├── train
-│   │   │   ├── images
-│   │   │   ├── masks
-│   │   ├── val
-│   │   │   ├── images
-│   │   │   ├── masks
-│   ├── processed
-│   │   ├── images
-│   │   ├── masks
-│   │   ├── metadata
-│   │   ├── patches
-│   ├── raw
-│   │   ├── catalogue
-│   │   ├── fits
-├── notebooks
-│   ├── data
-│   │   ├── processed
-│   │   │   ├── patches
-├── outputs
-│   ├── figures
-│   │   │   ├── catalogueA
-│   │   │   ├── catalogueB
-│   │   │   ├── catalogueC
-│   │   │   ├── **/*.png
-│   │   │   ├── **/*.pdf
-└── .gitignore
-└── README.md
+Seven notebooks in `notebooks/`, in this order. The first four are run once and
+produce the cleaned catalogue and the masks; the last three are run once per
+label set.
+
+| # | Notebook | What it does |
+|---|---|---|
+| 1 | `catalogueBCorrection` | Repairs an hour/degree notation defect in one catalogue |
+| 2 | `bubbleStrattification` | Merges the catalogues, assigns a global ID, derives six size classes from radius percentiles |
+| 3 | `catalogueSegregation` | Applies a manual exclusion list, writes the cleaned catalogue |
+| 4 | `galaxyMaskGeneration` | Rasterises annotations into a foreground mask and an ignore mask |
+| 5 | `modelTraining` | Patch extraction, class balancing, augmentation, U-Net training per fold, threshold sweep |
+| 6 | `perClassEvaluation` | Post-processing, per-class detection, precision, chance-coverage control |
+| 7 | `baselineTraining` | Reduced-capacity model for comparison |
+
+**Selecting a label set.** Notebooks 4–7 read an `ACTIVE_STAGE` constant in
+their first cell. A label set is a filter on the `SIZE_CLASS` column of a single
+catalogue, not a separate file, so switching stages requires no data
+duplication:
+
+| stage | active classes |
+|---|---|
+| `stage00` | largest class only |
+| `stage01` | two largest |
+| `stage02` | three largest |
+| `stage05` | all six |
+
+Annotations outside the active set are marked *ignored* rather than background,
+and are excluded from the loss.
+
+**Fold definitions** come from `scripts/makeFolds.py`, which partitions the
+mosaic into contiguous blocks. Patches straddling a block boundary are dropped
+from both the training and validation sets, so no training patch shares pixels
+with a validation patch.
+
+`scripts/experiments/runPipeline.py` executes the notebook chain in dependency
+order for one stage, pausing at the manual cleaning step.
+
+## Applying a trained model
+
+```
+python scripts/experiments/whereIsMyBubble.py \
+    --image  path/to/mosaic.fits \
+    --model  outputs/models/stage05fold0bubble_unet.keras \
+    --output outputs/predictions/newTarget \
+    --distance-pc 9.77e6
 ```
 
-FInal pipeline to this table
-| No | File Name | Details 
-|----|------------|-------|
-| 1  | index | Entry point
+Writes a probability map, a candidate region table in pixel and sky
+coordinates, and a DS9 region file. `--threshold`, `--min-blob-px` and
+`--stride` override the defaults.
 
-###  :hammer: Build
-Entry script command and options
+## Layout
 
-### :rocket: Deployment
-Write the deployment instruction here.
+```
+data/
+  raw/                 FITS mosaic and source catalogues (not redistributed)
+  processed/           merged and cleaned catalogue, masks, patches, arrays
+notebooks/             the seven pipeline notebooks
+  archival/            superseded notebooks from earlier pipeline versions
+  experiments/         side investigations, not part of the reported pipeline
+scripts/
+  makeFolds.py         partitions the mosaic into spatial folds
+  mergeCatalogues.py   catalogue merge helper
+  experiments/         diagnostics, figure generation, the CLI tool
+outputs/
+  models/              trained weights, prefixed by label set and fold
+  history/             training curves, run configurations, selected thresholds
+  predictions/         per-bubble coverage, per-class evaluation, chance control
+  figures/             diagnostic and publication plots
+  diagnostics/         target-level analyses that depend on no trained model
+```
 
-## :cherry_blossom: Community
+## Outputs and traceability
 
-If it's open-source, talk about the community here, ask social media links and other links.
+Every run serialises its full configuration next to its outputs: active label
+set and fold, architecture and loss settings, random seed, parameter count,
+patch counts and the supervised fraction of each split. Every artefact carries
+a label-set and fold prefix, so any number can be traced back to the run that
+produced it.
 
- ###  :fire: Contribution
+The random seed is reset at the start of each fold, so fold *k* does not
+inherit the random state of fold *k*−1. Augmentation uses stateless transforms
+seeded per sample and is materialised to disk, so an augmented dataset can be
+regenerated exactly. Exact numerical reproducibility still depends on the
+TensorFlow version, the hardware and deterministic-operation settings.
 
- Your contributions are always welcome and appreciated. Following are the things you can do to contribute to this project.
-
- 1. **Report a bug** <br>
- If you think you have encountered a bug, and I should know about it, feel free to report it [here]() and I will take care of it.
-
- 2. **Request a feature** <br>
- You can also request for a feature [here](), and if it will viable, it will be picked for development.  
-
- 3. **Create a pull request** <br>
- It can't get better then this, your pull request will be appreciated by the community. You can get started by picking up any open issues from [here]() and make a pull request.
-
- > If you are new to open-source, make sure to check read more about it [here](https://www.digitalocean.com/community/tutorial_series/an-introduction-to-open-source) and learn more about creating a pull request [here](https://www.digitalocean.com/community/tutorials/how-to-create-a-pull-request-on-github).
-
-
- ### :cactus: Branches
-
- I use an agile continuous integration methodology, so the version is frequently updated and development is really fast.
-
-1. **`stage`** is the development branch.
-
-2. **`master`** is the production branch.
-
-3. No other permanent branches should be created in the main repository, you can create feature branches but they should get merged with the master.
-
-**Steps to work with feature branch**
-
-1. To start working on a new feature, create a new branch prefixed with `feat` and followed by feature name. (ie. `feat-FEATURE-NAME`)
-2. Once you are done with your changes, you can raise PR.
-
-**Steps to create a pull request**
-
-1. Make a PR to `stage` branch.
-2. Comply with the best practices and guidelines e.g. where the PR concerns visual elements it should have an image showing the effect.
-3. It must pass all continuous integration checks and get positive reviews.
-
-After this, changes will be merged.
-
-
-### :exclamation: Guideline
-coding guidelines or other things you want people to follow should follow.
-
-
-## :question: FAQ
-You can optionally add a FAQ section about the project.
-
-##  :page_facing_up: Resources
-Add important resources here
-
-##  :camera: Gallery
-Pictures of your project.
-
-## :star2: Credit/Acknowledgment
-Credit the authors here.
-
-##  :lock: License
-Add a license here, or a link to it.
+One step is not automated: the visual inspection of catalogue entries. Its
+outcome is stored as an exclusion list keyed by global identifier
+(`data/processed/metadata/badBubbles.txt`) and applied programmatically on
+every subsequent run.
