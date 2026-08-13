@@ -1,0 +1,2 @@
+size_class,n_bubbles,observed_recall,chance_recall_mean,chance_recall_std,chance_recall_p95,excess_above_chance,pp_tta,pp_painted_fraction
+edgeLarge,24,0.08333333333333333,0.00125,0.007107800878846658,0.0,0.08208333333333333,True,0.056163969494047616

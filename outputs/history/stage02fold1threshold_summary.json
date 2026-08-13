@@ -1,0 +1,10 @@
+{
+  "active_stage": "stage02",
+  "fold": 1,
+  "best_threshold": 0.15000000000000002,
+  "validation_dice": 0.4782513380050659,
+  "predicted_foreground_ratio": 0.4882420003414154,
+  "ground_truth_foreground_ratio": 0.294299453496933,
+  "supervised_ratio": 0.9871135950088501,
+  "masked": true
+}

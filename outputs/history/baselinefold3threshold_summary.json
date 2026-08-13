@@ -1,0 +1,8 @@
+{
+  "run_name": "baseline",
+  "fold": 3,
+  "best_threshold": 0.42500000000000016,
+  "validation_dice": 0.48735761642456055,
+  "predicted_foreground_ratio": 0.435365229845047,
+  "ground_truth_foreground_ratio": 0.2459033727645874
+}
